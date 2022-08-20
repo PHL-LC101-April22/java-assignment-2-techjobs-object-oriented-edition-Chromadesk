@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.launchcode.techjobs.oo.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by LaunchCode
  */
@@ -24,20 +26,58 @@ public class JobTest {
         assertNotEquals(soundEngineer, marketer);
     }
     @Test
-    public void testConstructorSetsAllFields() {
+    public void testJobConstructorSetsAllFields() {
+        assertTrue(soundEngineer.getName() instanceof String);
         assertTrue(soundEngineer.getEmployer() instanceof Employer);
         assertTrue(soundEngineer.getLocation() instanceof Location);
         assertTrue(soundEngineer.getPositionType() instanceof PositionType);
         assertTrue(soundEngineer.getCoreCompetency() instanceof CoreCompetency);
-        assertSame("Sound Engineer", soundEngineer.getName());
-        assertSame("Audio Lion", soundEngineer.getEmployer().getValue());
-        assertSame("California", soundEngineer.getLocation().getValue());
-        assertSame("Senior", soundEngineer.getPositionType().getValue());
-        assertSame("Experience", soundEngineer.getCoreCompetency().getValue());
+        assertEquals("Sound Engineer", soundEngineer.getName());
+        assertEquals("Audio Lion", soundEngineer.getEmployer().getValue());
+        assertEquals("California", soundEngineer.getLocation().getValue());
+        assertEquals("Senior", soundEngineer.getPositionType().getValue());
+        assertEquals("Experience", soundEngineer.getCoreCompetency().getValue());
     }
     @Test
     public void testJobsForEquality() {
         Job cloneEngineer = new Job("Sound Engineer", new Employer("Audio Lion"), new Location("California"), new PositionType("Senior"), new CoreCompetency("Experience"));
         assertFalse(soundEngineer.equals(cloneEngineer));
+    }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        char[] jobPrintout = soundEngineer.toString().toCharArray();
+        assertEquals("/n", jobPrintout[0] + "" + jobPrintout[1]);
+        assertEquals("/n", jobPrintout[jobPrintout.length - 2] + "" + jobPrintout[jobPrintout.length - 1]);
+    }
+    @Test
+    public void testToStringContainsCorrectLabelsAndData() {
+        String[] jobPrintout = soundEngineer.toString().split("/n");
+        ArrayList<String> printArray = new ArrayList<>();
+        for (String word : jobPrintout) {
+            if (word.length() > 0) {
+                printArray.add(word);
+            }
+        }
+        assertTrue(printArray.get(0).contains("ID:"));
+        assertTrue(printArray.get(1).contains("Name:"));
+        assertTrue(printArray.get(2).contains("Employer:"));
+        assertTrue(printArray.get(3).contains("Location:"));
+        assertTrue(printArray.get(4).contains("Position Type:"));
+        assertTrue(printArray.get(5).contains("Core Competency:"));
+    }
+    @Test
+    public void testToStringHandlesEmptyField() {
+        String[] jobPrintout = marketer.toString().split("/n");
+        ArrayList<String> printArray = new ArrayList<>();
+        for (String word : jobPrintout) {
+            if (word.length() > 0) {
+                printArray.add(word);
+            }
+        }
+
+        for (int i = 1; i > printArray.size(); i++) {
+            assertTrue(printArray.get(i).contains("Data not available"));
+        }
     }
 }

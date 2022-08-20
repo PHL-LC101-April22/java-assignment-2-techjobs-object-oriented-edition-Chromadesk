@@ -1,5 +1,7 @@
 package org.launchcode.techjobs.oo;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Job {
@@ -40,6 +42,53 @@ public class Job {
             return ((Job) a).id == this.id;
         }
         return false;
+    }
+    @Override
+    public String toString() {
+        //There HAS to be a better way to do this.
+        String aname = null;
+        String aemployer = null;
+        String alocation = null;
+        String apositionType = null;
+        String acoreCompetency = null;
+        if (name == null) {
+            aname = "Data not found.";
+        } else {
+            aname = name;
+        }
+        if (employer == null) {
+            aemployer = "Data not found.";
+        } else {
+            aemployer = employer.getValue();
+        }
+        if (location == null) {
+            alocation = "Data not found.";
+        } else {
+            alocation = location.getValue();
+        }
+        if (positionType == null) {
+            apositionType = "Data not found.";
+        } else {
+            apositionType = positionType.getValue();
+        }
+        if (coreCompetency == null) {
+            acoreCompetency = "Data not found.";
+        } else {
+            acoreCompetency = coreCompetency.getValue();
+        }
+        String finalPrintout = "";
+        ArrayList<String> printValues = new ArrayList<>();
+        printValues.add("ID: " + id);
+        printValues.add("Name: " + aname);
+        printValues.add("Employer: " + aemployer);
+        printValues.add("Location: " + alocation);
+        printValues.add("Position Type: " + apositionType);
+        printValues.add("Core Competency: " + acoreCompetency);
+
+        for (String line : printValues) {
+            finalPrintout += "/n" + line + "/n";
+        }
+        return finalPrintout;
     }
 
     @Override
