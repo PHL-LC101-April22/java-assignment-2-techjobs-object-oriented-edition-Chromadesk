@@ -22,6 +22,10 @@ public class Job {
     public Job() {
         this.id = nextId;
         nextId++;
+        this.employer = new Employer("");
+        this.location = new Location("");
+        this.positionType = new PositionType("");
+        this.coreCompetency = new CoreCompetency("");
     }
 
     public Job(String aname, Employer aemployer, Location alocation, PositionType apositionType, CoreCompetency acoreCompetency) {
@@ -43,43 +47,21 @@ public class Job {
         }
         return false;
     }
+    private String findData(String data) {
+        if (data.length() <= 0) return "Data not available.";
+        return data;
+    }
     @Override
     public String toString() {
-        //There HAS to be a better way to do this.
-        String aname = null;
-        String aemployer = null;
-        String alocation = null;
-        String apositionType = null;
-        String acoreCompetency = null;
-        aname = Objects.requireNonNullElse(name, "Data not found.");
-        if (employer == null) {
-            aemployer = "Data not found.";
-        } else {
-            aemployer = employer.getValue();
-        }
-        if (location == null) {
-            alocation = "Data not found.";
-        } else {
-            alocation = location.getValue();
-        }
-        if (positionType == null) {
-            apositionType = "Data not found.";
-        } else {
-            apositionType = positionType.getValue();
-        }
-        if (coreCompetency == null) {
-            acoreCompetency = "Data not found.";
-        } else {
-            acoreCompetency = coreCompetency.getValue();
-        }
+        if ((name + employer.getValue() + location.getValue() + positionType.getValue() + coreCompetency.getValue()).length() <= 0) return "/nOOPS! This job does not seem to exist./n";
         String finalPrintout = "";
         ArrayList<String> printValues = new ArrayList<>();
         printValues.add("ID: " + id);
-        printValues.add("Name: " + aname);
-        printValues.add("Employer: " + aemployer);
-        printValues.add("Location: " + alocation);
-        printValues.add("Position Type: " + apositionType);
-        printValues.add("Core Competency: " + acoreCompetency);
+        printValues.add("Name: " + findData(name));
+        printValues.add("Employer: " + findData(employer.getValue()));
+        printValues.add("Location: " + findData(location.getValue()));
+        printValues.add("Position Type: " + findData(positionType.getValue()));
+        printValues.add("Core Competency: " + findData(coreCompetency.getValue()));
 
         for (String line : printValues) {
             finalPrintout += "/n" + line + "/n";

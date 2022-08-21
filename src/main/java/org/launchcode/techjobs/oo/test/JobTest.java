@@ -19,7 +19,7 @@ public class JobTest {
     @Before
     public void createJobObject() {
         soundEngineer = new Job("Sound Engineer", new Employer("Audio Lion"), new Location("California"), new PositionType("Senior"), new CoreCompetency("Experience"));
-        marketer = new Job();
+        marketer = new Job("",new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
     }
     @Test
     public void testSettingJobId() {
@@ -68,6 +68,7 @@ public class JobTest {
     }
     @Test
     public void testToStringHandlesEmptyField() {
+        marketer.setName("Marketer");
         String[] jobPrintout = marketer.toString().split("/n");
         ArrayList<String> printArray = new ArrayList<>();
         for (String word : jobPrintout) {
@@ -75,9 +76,13 @@ public class JobTest {
                 printArray.add(word);
             }
         }
-
-        for (int i = 1; i > printArray.size(); i++) {
+        for (int i = 2; i < printArray.size(); i++) {
             assertTrue(printArray.get(i).contains("Data not available"));
         }
+    }
+    @Test
+    public void testToStringPrintsMockErrorForEmptyData() {
+        assertEquals("/nOOPS! This job does not seem to exist./n",marketer.toString());
+        assertNotEquals("/nOOPS! This job does not seem to exist./n",soundEngineer.toString());
     }
 }
