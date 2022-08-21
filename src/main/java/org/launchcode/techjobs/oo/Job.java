@@ -51,11 +51,7 @@ public class Job {
         String alocation = null;
         String apositionType = null;
         String acoreCompetency = null;
-        if (name == null) {
-            aname = "Data not found.";
-        } else {
-            aname = name;
-        }
+        aname = Objects.requireNonNullElse(name, "Data not found.");
         if (employer == null) {
             aemployer = "Data not found.";
         } else {
